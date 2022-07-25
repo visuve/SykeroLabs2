@@ -1,0 +1,17 @@
+﻿{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "win-arm-none-eabi",
+      "displayName": "win-arm-none-eabi",
+      "description": "Compile to Pico on Windows",
+      "generator": "Ninja",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    }
+  ]
+}
+
