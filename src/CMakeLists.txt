@@ -1,4 +1,6 @@
-add_executable(sykerolabs "Main.cpp")
+file(GLOB sykerolabs_src "*.cpp" "*.hpp")
+
+add_executable(sykerolabs ${sykerolabs_src})
 
 pico_enable_stdio_usb(sykerolabs 1)
 pico_enable_stdio_uart(sykerolabs 0)
