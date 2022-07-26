@@ -17,11 +17,11 @@
 		- https://noctua.at/en/nf-a20-pwm
 		- https://noctua.at/pub/media/wysiwyg/Noctua_PWM_specifications_white_paper.pdf
   
-		- 2x 6.7k resistors (for fan RPM inputs)
-		- 2.54mm pitch male headers (for fans)
-		- SolarXon ~50W solar panel 
-		- Biltema 12v solar panel controller
-		- Biltema 12v 2A submersible pumps (controlled by the relay shield)
+	- 2x 6.7k resistors (for fan RPM inputs)
+	- 2.54mm pitch male headers (for fans)
+	- SolarXon ~50W solar panel 
+	- Biltema 12v solar panel controller
+	- Biltema 12v 2A submersible pumps (controlled by the relay shield)
   
 ## TODO:
 
