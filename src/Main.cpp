@@ -3,6 +3,8 @@
 #include <hardware/gpio.h>
 
 #include "fan.hpp"
+#include "onboard_temperature_sensor.hpp"
+#include "ds18b20.hpp"
 
 int main() {
 	stdio_init_all();
@@ -13,7 +15,10 @@ int main() {
 	fan fan1(pins::FAN1_PWM_OUT, pins::FAN1_RPM_IN);
 	fan fan2(pins::FAN2_PWM_OUT, pins::FAN2_RPM_IN);
 
-	puts("Fan 1 RPM; Fan 2 RPM");
+	onboard_temperature_sensor onboard_temperature;	
+	ds18b20 temperature(pins::DS18B20_IN);
+
+	puts("Fan 1 RPM; Fan 2 RPM; Temperature");
 
 	while (true) {
 		gpio_put(pins::ONBOARD_LED, 1);
@@ -21,7 +26,11 @@ int main() {
 		gpio_put(pins::ONBOARD_LED, 0);
 		sleep_ms(1000);
 
-		printf("%u;%u\n", fan1.rpm(), fan2.rpm());
+		printf("%u;%u;%.2f;%.2f\n",
+			fan1.rpm(),
+			fan2.rpm(),
+			onboard_temperature.celcius(),
+			temperature.celcius());
 	}
 
 	return 0;
