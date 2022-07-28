@@ -19,9 +19,9 @@ fan::fan(uint pwm_pin, uint rpm_pin) :
 	gpio_set_dir(rpm_pin, GPIO_IN);
 
 	pwm_set_wrap(_pwm_slice, 100);
-	pwm_set_clkdiv(_pwm_slice, 255);
+	pwm_set_clkdiv(_pwm_slice, 49.5f); // 25.00khz
 
-	set_speed_percent(0);
+	set_speed_percent(50);
 	pwm_set_enabled(_pwm_slice, true);
 
 	_revolutions[rpm_pin] = 0;
