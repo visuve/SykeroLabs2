@@ -31,6 +31,8 @@
 
 ## TODO:
 
+- RTC & relay control classes
+- Improve fan RPM calculation
 - A diagram or picture of the soldered parts
-- PH and EC measurement probes (I might run out of program storage)
+- PH and EC measurement probes
 		- PH adjustment and nutrient pumps
