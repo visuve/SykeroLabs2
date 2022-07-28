@@ -15,8 +15,8 @@ namespace pins {
 		FAN2_PWM_OUT = 12,
 		FAN2_RPM_IN = 13,
 
-		RTC_I2C_SCL = 20,
-		RTC_I2C_SDA = 21,
+		RTC_I2C_SDA = 20,
+		RTC_I2C_SCL = 21,
 
 		DS18B20_IN = 22,
 

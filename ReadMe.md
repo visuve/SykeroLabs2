@@ -11,6 +11,7 @@
 
 - Waveshare Pico RTC DS3231
 	- https://www.waveshare.com/wiki/Pico-RTC-DS3231
+	- https://datasheets.maximintegrated.com/en/ds/DS3231-DS3231S.pdf
 
 - SB-Components Pico Zero Board
 	- https://shop.sb-components.co.uk/products/pico-zero-board
