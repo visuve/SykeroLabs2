@@ -1,8 +1,8 @@
+#include "fan.hpp"
+
 #include <pico/stdlib.h>
 #include <hardware/pwm.h>
 #include <hardware/gpio.h>
-
-#include "fan.hpp"
 
 volatile uint32_t fan::_revolutions[] = {};
 
@@ -13,8 +13,7 @@ void fan::tachometer_callback(uint gpio, uint32_t) {
 fan::fan(uint pwm_pin, uint rpm_pin) :
 	_pwm_slice(pwm_gpio_to_slice_num(pwm_pin)),
 	_pwm_channel(pwm_gpio_to_channel(pwm_pin)),
-	_rpm_pin(rpm_pin)
-{
+	_rpm_pin(rpm_pin) {
 	gpio_set_function(pwm_pin, GPIO_FUNC_PWM);
 	gpio_set_dir(rpm_pin, GPIO_IN);
 

@@ -32,7 +32,7 @@
 
 ## TODO:
 
-- RTC & relay control classes
+- Relay control class
 - Improve fan RPM calculation
 - A diagram or picture of the soldered parts
 - PH and EC measurement probes
