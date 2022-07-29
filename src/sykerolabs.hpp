@@ -9,11 +9,11 @@ namespace pins {
 		RELAY1_OUT = 6,
 		RELAY2_OUT = 7,
 
-		FAN1_PWM_OUT = 10,
-		FAN1_RPM_IN = 11,
+		FAN1_RPM_IN = 8,
+		FAN1_PWM_OUT = 9,
 
-		FAN2_PWM_OUT = 12,
-		FAN2_RPM_IN = 13,
+		FAN2_RPM_IN = 10,
+		FAN2_PWM_OUT = 11,
 
 		RTC_I2C_SDA = 20,
 		RTC_I2C_SCL = 21,
