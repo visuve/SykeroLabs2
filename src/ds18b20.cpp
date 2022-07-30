@@ -122,7 +122,7 @@ void ds18b20::convert_temperature() {
 	reset();
 	write_byte(onewire::command::SKIP_ROM);
 	write_byte(onewire::command::CONVERT_TEMPERATURE);
-	sleep_us(5);
+	sleep_us(750000);
 }
 
 void ds18b20::read_scratchpad() {
