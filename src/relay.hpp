@@ -14,6 +14,8 @@ public:
 
 	void toggle(bool value);
 
+	const char* status() const;
+
 private:
 	static bool repeating_timer_callback(repeating_timer* timer);
 
@@ -21,6 +23,6 @@ private:
 	toggle_condition_t _toggle_condition;
 	void** _toggle_data;
 	int32_t _check_inteval_ms;
-	bool _state;
+	volatile bool _state;
 	repeating_timer _timer;
 };

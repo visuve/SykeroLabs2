@@ -31,6 +31,10 @@ void relay::toggle(bool value) {
 	}
 }
 
+const char* relay::status() const {
+	return _state ? "on" : "off";
+}
+
 bool relay::repeating_timer_callback(repeating_timer* timer) {
 	if (!timer || !timer->user_data) {
 		return false;
