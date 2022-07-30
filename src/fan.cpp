@@ -20,7 +20,7 @@ fan::fan(uint pwm_pin, uint rpm_pin) :
 	pwm_set_wrap(_pwm_slice, 100);
 	pwm_set_clkdiv(_pwm_slice, 49.5f); // 25.00khz
 
-	set_speed_percent(50);
+	set_speed_percent(0);
 	pwm_set_enabled(_pwm_slice, true);
 
 	_revolutions[rpm_pin] = 0;
