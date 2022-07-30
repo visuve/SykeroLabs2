@@ -2,6 +2,7 @@
 
 #include <pico.h>
 
+// https://www.maximintegrated.com/en/design/technical-documents/app-notes/1/126.html
 // https://www.maximintegrated.com/en/design/technical-documents/app-notes/1/162.html
 class ds18b20 {
 public:
