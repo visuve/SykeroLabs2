@@ -32,6 +32,7 @@
 
 ## TODO:
 
+- Make DS18B20 & DS3231 classes thread safe
 - Improve fan RPM calculation
 - A diagram or picture of the soldered parts
 - PH and EC measurement probes
