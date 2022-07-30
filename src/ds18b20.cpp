@@ -57,11 +57,11 @@ ds18b20::ds18b20(uint pin) :
 bool ds18b20::reset() const {
 	gpio_set_dir(_pin, GPIO_OUT);
 	gpio_put(_pin, false);
-	sleep_us(480);
+	busy_wait_us(480);
 	gpio_set_dir(_pin, GPIO_IN);
-	sleep_us(70);
+	busy_wait_us(70);
 	bool result = !gpio_get(_pin);
-	sleep_us(410);
+	busy_wait_us(410);
 
 	if (!result) {
 		puts("reset failed!");
@@ -73,15 +73,15 @@ bool ds18b20::reset() const {
 void ds18b20::write_bit(bool value) const {
 	gpio_set_dir(_pin, GPIO_OUT);
 	gpio_put(_pin, false);
-	sleep_us(7);
+	busy_wait_us(7);
 
 	if (value) {
 		gpio_put(_pin, true);
-		sleep_us(55);
+		busy_wait_us(55);
 	} else {
-		sleep_us(90);
+		busy_wait_us(90);
 		gpio_put(_pin, true);
-		sleep_us(5);
+		busy_wait_us(5);
 	}
 }
 
@@ -99,11 +99,11 @@ void ds18b20::write_byte(uint8_t value) const {
 bool ds18b20::read_bit() const {
 	gpio_set_dir(_pin, GPIO_OUT);
 	gpio_put(_pin, false);
-	sleep_us(7);
+	busy_wait_us(7);
 	gpio_set_dir(_pin, GPIO_IN);
-	sleep_us(7);
+	busy_wait_us(7);
 	bool result = gpio_get(_pin);
-	sleep_us(45);
+	busy_wait_us(45);
 	return result;
 }
 
@@ -122,7 +122,7 @@ void ds18b20::convert_temperature() {
 	reset();
 	write_byte(onewire::command::SKIP_ROM);
 	write_byte(onewire::command::CONVERT_TEMPERATURE);
-	sleep_us(750000);
+	busy_wait_ms(750);
 }
 
 void ds18b20::read_scratchpad() {
