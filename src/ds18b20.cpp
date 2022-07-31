@@ -1,10 +1,6 @@
+#include "pch.hpp"
 #include "ds18b20.hpp"
 #include "mutex_guard.hpp"
-
-#include <cstdio>
-
-#include <pico/time.h>
-#include <hardware/gpio.h>
 
 namespace onewire {
 	enum command : uint8_t {

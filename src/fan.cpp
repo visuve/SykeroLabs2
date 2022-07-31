@@ -1,8 +1,5 @@
+#include "pch.hpp"
 #include "fan.hpp"
-
-#include <pico/stdlib.h>
-#include <hardware/pwm.h>
-#include <hardware/gpio.h>
 
 void fan::tachometer_callback(uint gpio, uint32_t) {
 	++_revolutions[gpio];

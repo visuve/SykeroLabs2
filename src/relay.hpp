@@ -1,7 +1,5 @@
 #pragma once
 
-#include <pico/stdlib.h>
-
 class relay {
 public:
 	typedef bool(*toggle_condition_t)(void**);

@@ -1,21 +1,9 @@
 #pragma once
 
-#include <pico/mutex.h>
-#include <hardware/gpio.h>
-#include "sykerolabs.hpp"
-
 class mutex_guard {
 public:
-	inline mutex_guard(mutex_t* mutex) :
-		_mutex(mutex) {
-		mutex_enter_blocking(_mutex);
-		gpio_put(pins::ONBOARD_LED, true);
-	}
-
-	inline ~mutex_guard() {
-		gpio_put(pins::ONBOARD_LED, false);
-		mutex_exit(_mutex);
-	}
+	mutex_guard(mutex_t* mutex);
+	~mutex_guard();
 
 private:
 	mutex_t* _mutex;
@@ -23,16 +11,9 @@ private:
 
 class recursive_mutex_guard {
 public:
-	inline recursive_mutex_guard(recursive_mutex_t* mutex) :
-		_mutex(mutex) {
-		recursive_mutex_enter_blocking(_mutex);
-		gpio_put(pins::ONBOARD_LED, true);
-	}
+	recursive_mutex_guard(recursive_mutex_t* mutex);
 
-	inline ~recursive_mutex_guard() {
-		gpio_put(pins::ONBOARD_LED, false);
-		recursive_mutex_exit(_mutex);
-	}
+	~recursive_mutex_guard();
 
 private:
 	recursive_mutex_t* _mutex;

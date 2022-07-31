@@ -1,10 +1,5 @@
+#include "pch.hpp"
 #include "ds3231.hpp"
-
-#include <cstdio>
-
-#include <pico/stdlib.h>
-#include <pico/util/datetime.h>
-
 #include "mutex_guard.hpp"
 
 constexpr uint8_t from_bcd(uint8_t value) {

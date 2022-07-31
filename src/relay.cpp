@@ -1,7 +1,5 @@
+#include "pch.hpp"
 #include "relay.hpp"
-
-#include <pico/stdlib.h>
-#include <hardware/gpio.h>
 
 relay::relay(
 	uint pin,

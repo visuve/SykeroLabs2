@@ -1,7 +1,5 @@
 #pragma once
 
-#include <pico.h>
-
 namespace pins {
 	enum : uint8_t {
 		ONBOARD_TEMPERATURE_IN = PICO_DEFAULT_I2C_SDA_PIN,

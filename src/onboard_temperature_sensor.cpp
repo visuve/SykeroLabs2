@@ -1,7 +1,6 @@
+#include "pch.hpp"
 #include "onboard_temperature_sensor.hpp"
 #include "sykerolabs.hpp"
-
-#include <hardware/adc.h>
 
 // The ADC is 12 bit and the reference voltage is 3.3
 constexpr float CONVERSION_FACTOR = 3.3f / (1 << 12);

@@ -1,8 +1,5 @@
 #pragma once
 
-#include <pico/mutex.h>
-#include <hardware/i2c.h>
-
 class ds3231 {
 public:
 	ds3231(uint sda_pin, uint scl_pin, i2c_inst_t* i2c);

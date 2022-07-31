@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <pico/stdlib.h>
-#include <hardware/gpio.h>
-
+#include "pch.hpp"
 #include "fan.hpp"
 #include "onboard_temperature_sensor.hpp"
 #include "ds18b20.hpp"
