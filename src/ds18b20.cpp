@@ -1,4 +1,5 @@
 #include "ds18b20.hpp"
+#include "mutex_guard.hpp"
 
 #include <cstdio>
 
@@ -52,6 +53,7 @@ constexpr uint8_t DALLAS_CRC_LOOKUP_TABLE[] = {
 ds18b20::ds18b20(uint pin) :
 	_pin(pin) {
 	gpio_init(_pin);
+	mutex_init(&_mutex);
 }
 
 bool ds18b20::reset() const {
@@ -153,6 +155,8 @@ bool ds18b20::is_scratchpad_checksum_valid() {
 }
 
 float ds18b20::celcius() {
+	mutex_guard guard(&_mutex);
+
 	convert_temperature();
 	read_scratchpad();
 

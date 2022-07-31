@@ -1,6 +1,6 @@
 #pragma once
 
-#include <pico.h>
+#include <pico/mutex.h>
 #include <hardware/i2c.h>
 
 class ds3231 {
@@ -16,6 +16,7 @@ public:
 private:
 	i2c_inst_t* _i2c;
 	mutable char _timestamp[20] = {};
+	mutable recursive_mutex_t _mutex;
 
 	static constexpr uint8_t ADDRESS = 0x68;
 };

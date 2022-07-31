@@ -19,10 +19,10 @@ public:
 private:
 	static bool repeating_timer_callback(repeating_timer* timer);
 
-	uint _pin;
-	toggle_condition_t _toggle_condition;
+	const uint _pin;
+	const toggle_condition_t _toggle_condition;
 	void** _toggle_data;
-	int32_t _check_inteval_ms;
+	const int32_t _check_inteval_ms;
 	volatile bool _state;
 	repeating_timer _timer;
 };

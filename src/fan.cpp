@@ -4,23 +4,23 @@
 #include <hardware/pwm.h>
 #include <hardware/gpio.h>
 
-volatile uint32_t fan::_revolutions[] = {};
-
 void fan::tachometer_callback(uint gpio, uint32_t) {
 	++_revolutions[gpio];
 }
 
-fan::fan(uint pwm_pin, uint rpm_pin) :
+fan::fan(uint pwm_pin, uint rpm_pin, float min_temp, float max_temp) :
 	_pwm_slice(pwm_gpio_to_slice_num(pwm_pin)),
 	_pwm_channel(pwm_gpio_to_channel(pwm_pin)),
-	_rpm_pin(rpm_pin) {
+	_rpm_pin(rpm_pin),
+	_min_temp(min_temp),
+	_max_temp(max_temp) {
 	gpio_set_function(pwm_pin, GPIO_FUNC_PWM);
 	gpio_set_dir(rpm_pin, GPIO_IN);
 
 	pwm_set_wrap(_pwm_slice, 100);
 	pwm_set_clkdiv(_pwm_slice, 49.5f); // 25.00khz
 
-	set_speed_percent(0);
+	set_speed_percent(_speed_percent);
 	pwm_set_enabled(_pwm_slice, true);
 
 	_revolutions[rpm_pin] = 0;
@@ -32,12 +32,30 @@ fan::fan(uint pwm_pin, uint rpm_pin) :
 		&tachometer_callback);
 }
 
-void fan::set_speed_percent(uint16_t percent) {
+void fan::adjust(float temperature) {
+	if (temperature <= _min_temp) {
+		set_speed_percent(0);
+		return;
+	}
+
+	if (temperature >= _max_temp) {
+		set_speed_percent(100);
+		return;
+	}
+
+	const float step = 100.0f / (_max_temp - _min_temp);
+	set_speed_percent((temperature - _min_temp) * step);
+}
+
+void fan::set_speed_percent(uint8_t percent) {
 	if (percent > 100) {
 		percent = 100;
 	}
 
-	pwm_set_chan_level(_pwm_slice, _pwm_channel, percent);
+	if (_speed_percent != percent) {
+		pwm_set_chan_level(_pwm_slice, _pwm_channel, percent);
+		_speed_percent = percent;
+	}
 }
 
 uint32_t fan::rpm() {

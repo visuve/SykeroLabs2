@@ -5,6 +5,8 @@
 #include <pico/stdlib.h>
 #include <pico/util/datetime.h>
 
+#include "mutex_guard.hpp"
+
 constexpr uint8_t from_bcd(uint8_t value) {
 	return value - 6 * (value >> 4);
 }
@@ -30,9 +32,13 @@ ds3231::ds3231(uint sda_pin, uint scl_pin, i2c_inst_t* i2c) :
 
 	gpio_pull_up(sda_pin);
 	gpio_pull_up(scl_pin);
+
+	recursive_mutex_init(&_mutex);
 }
 
 datetime_t ds3231::datetime() const {
+	recursive_mutex_guard guard(&_mutex);
+
 	uint8_t value = 0x00;
 	i2c_write_blocking(_i2c, ADDRESS, &value, 1, true);
 	
@@ -68,6 +74,8 @@ void ds3231::adjust(const datetime_t& dt) {
 }
 
 const char* ds3231::timestamp(const datetime_t& dt) const {
+	recursive_mutex_guard guard(&_mutex);
+
 	snprintf(_timestamp, 20,
 		"%04u-%02u-%02uT%02u:%02u:%02u",
 		dt.year,

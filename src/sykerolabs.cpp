@@ -8,6 +8,9 @@
 #include "ds3231.hpp"
 #include "relay.hpp"
 
+constexpr float TEMPERATURE_MIN = 20.00f;
+constexpr float TEMPERATURE_MAX = 40.00f;
+
 bool is_night_time(const datetime_t& dt) {
 	return dt.hour >= 21 || dt.hour <= 8;
 }
@@ -38,7 +41,7 @@ bool fan_toggle_condition(void** data) {
 
 	auto temperature_sensor = reinterpret_cast<ds18b20*>(data[1]);
 
-	if (temperature_sensor->celcius() <= 20.00f) {
+	if (temperature_sensor->celcius() <= TEMPERATURE_MIN) {
 		return false;
 	}
 
@@ -65,11 +68,11 @@ int main() {
 
 	ds3231 rtc(pins::RTC_I2C_SDA, pins::RTC_I2C_SCL, &i2c0_inst);
 
-	onboard_temperature_sensor internal_temperature;
-	ds18b20 external_temperature(pins::DS18B20_IN);
+	onboard_temperature_sensor internal_temperature_sensor;
+	ds18b20 external_temperature_sensor(pins::DS18B20_IN);
 
-	fan fan1(pins::FAN1_PWM_OUT, pins::FAN1_RPM_IN);
-	fan fan2(pins::FAN2_PWM_OUT, pins::FAN2_RPM_IN);
+	fan fan1(pins::FAN1_PWM_OUT, pins::FAN1_RPM_IN, TEMPERATURE_MIN, TEMPERATURE_MAX);
+	fan fan2(pins::FAN2_PWM_OUT, pins::FAN2_RPM_IN, TEMPERATURE_MIN, TEMPERATURE_MAX);
 
 	constexpr int32_t INTERVAL_MS = 60000; // A minute
 
@@ -77,26 +80,34 @@ int main() {
 	void* pump_toggle_data[2] = { &rtc, &counter };
 	relay pump_relay(pins::RELAY1_OUT, pump_toggle_condition, pump_toggle_data, INTERVAL_MS);
 
-	// The DS18B20 & DS3231 are not yet thread safe, hence
-	// this artificial delay; I do not want the alarms to trigger simultaneously
+	// Add artificial delay to audibly hear the relays trigger at different times
 	sleep_ms(1000);
 
-	void* fan_toggle_data[2] = { &rtc, &external_temperature };
+	void* fan_toggle_data[2] = { &rtc, &external_temperature_sensor };
 	relay fan_relay(pins::RELAY2_OUT, fan_toggle_condition, fan_toggle_data, INTERVAL_MS);
 
 	sleep_ms(1000);
 
 	puts("Time;Internal temperature;External temperature;Fan 1 RPM;Fan 2 RPM;Pump relay;Fan relay");
 
+	float temperature;
+
 	while (true) {
-		printf("%s;%.2f;%.2f;%u;%u;%s;%s\n",
-			rtc.timestamp(),
-			internal_temperature.celcius(),
-			external_temperature.celcius(),
-			fan1.rpm(),
-			fan2.rpm(),
-			pump_relay.status(),
-			fan_relay.status());
+		{
+			temperature = external_temperature_sensor.celcius();
+
+			printf("%s;%.2f;%.2f;%u;%u;%s;%s\n",
+				rtc.timestamp(),
+				internal_temperature_sensor.celcius(),
+				temperature,
+				fan1.rpm(),
+				fan2.rpm(),
+				pump_relay.status(),
+				fan_relay.status());
+		}
+
+		fan1.adjust(temperature);
+		fan1.adjust(temperature);
 
 		sleep_ms(INTERVAL_MS);
 	}

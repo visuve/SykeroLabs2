@@ -1,6 +1,7 @@
 #pragma once
 
 #include <pico.h>
+#include <pico/mutex.h>
 
 // https://www.maximintegrated.com/en/design/technical-documents/app-notes/1/126.html
 // https://www.maximintegrated.com/en/design/technical-documents/app-notes/1/162.html
@@ -23,6 +24,7 @@ private:
 	void read_scratchpad();
 	bool is_scratchpad_checksum_valid();
 
-	uint _pin;
+	const uint _pin;
 	uint8_t _scratchpad[9] = {};
+	mutex_t _mutex;
 };
