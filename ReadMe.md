@@ -30,6 +30,12 @@
 - Biltema 12v solar panel controller
 - Biltema 12v 2A submersible pumps (controlled by the relay shield)
 
+## Build
+
+- You need ARM GNU Toolchain in PATH
+	- https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads
+- Compile and drop the .uf2 in Pico
+
 ## TODO:
 
 - Improve fan RPM calculation
