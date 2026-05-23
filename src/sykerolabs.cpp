@@ -104,7 +104,7 @@ int main() {
 		}
 
 		fan1.adjust(temperature);
-		fan1.adjust(temperature);
+		fan2.adjust(temperature);
 
 		sleep_ms(INTERVAL_MS);
 	}
